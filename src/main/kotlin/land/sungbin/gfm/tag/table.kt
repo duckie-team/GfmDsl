@@ -1,16 +1,18 @@
-package at.shockbytes.md.tag
+/*
+ * Designed and developed by Martin Macheiner and Ji Sungbin, 2022
+ *
+ * Licensed under the MIT.
+ * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
+ */
 
-import java.lang.IllegalStateException
-import java.lang.StringBuilder
+package land.sungbin.gfm.tag
+
+import land.sungbin.gfm.MarkdownTag
 
 class Table : MarkdownTag() {
-
     class TableHeader : MarkdownTag() {
-
         private val headers = mutableListOf<String>()
-
-        val count: Int
-            get() = headers.size
+        val count get() = headers.size
 
         operator fun String.unaryPlus() = headers.add(this)
 
@@ -39,19 +41,16 @@ class Table : MarkdownTag() {
 
     override fun content(): String {
         return if (tableHeader != null && tableBody != null) {
-            StringBuilder()
-                    .apply {
-                        append(tableHeader.toString())
-                        append(System.lineSeparator())
+            StringBuilder().apply {
+                append(tableHeader.toString())
+                append(System.lineSeparator())
 
-                        val divider = "|" + "-|".repeat(tableHeader!!.count)
-                        append(divider)
-                        append(System.lineSeparator())
+                val divider = "|" + "-|".repeat(tableHeader!!.count)
+                append(divider)
+                append(System.lineSeparator())
 
-                        append(tableBody.toString())
-                    }
-                    .toString()
-
+                append(tableBody.toString())
+            }.toString()
         } else throw IllegalStateException("Table header or body cannot be null!")
     }
 }

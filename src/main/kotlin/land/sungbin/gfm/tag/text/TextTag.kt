@@ -5,4 +5,8 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
-rootProject.name = "MarkdownDsl"
+package land.sungbin.gfm.tag.text
+
+import land.sungbin.gfm.MarkdownTag
+
+abstract class TextTag : MarkdownTag()

@@ -1,4 +1,4 @@
-package at.shockbytes.md.tag.text
+package land.sungbin.gfm.tag.text
 
 class Italic(private val text: String) : TextTag() {
     override fun content(): String = "*$text*"

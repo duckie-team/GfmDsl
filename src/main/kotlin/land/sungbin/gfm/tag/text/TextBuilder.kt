@@ -1,6 +1,13 @@
-package at.shockbytes.md.tag.text
+/*
+ * Designed and developed by Martin Macheiner and Ji Sungbin, 2022
+ *
+ * Licensed under the MIT.
+ * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
+ */
 
-import at.shockbytes.md.tag.MarkdownTag
+package land.sungbin.gfm.tag.text
+
+import land.sungbin.gfm.MarkdownTag
 
 class TextBuilder : MarkdownTag() {
 
