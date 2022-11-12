@@ -22,7 +22,10 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=strict"
+    }
 }
 
 tasks.withType<JavaCompile> {
