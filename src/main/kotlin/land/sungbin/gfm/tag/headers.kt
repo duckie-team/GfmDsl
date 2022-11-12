@@ -5,9 +5,9 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
-package land.sungbin.gfm.tag.text
+package land.sungbin.gfm.tag
 
-import land.sungbin.gfm.tag.MarkdownTag
+import land.sungbin.gfm.MarkdownTag
 
 public open class HeaderText internal constructor(
     private val text: String,

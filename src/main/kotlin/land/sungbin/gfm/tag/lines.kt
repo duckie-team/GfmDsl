@@ -7,6 +7,8 @@
 
 package land.sungbin.gfm.tag
 
+import land.sungbin.gfm.MarkdownTag
+
 public object LineBreak : MarkdownTag() {
     public override fun content(): String = "  "
 }

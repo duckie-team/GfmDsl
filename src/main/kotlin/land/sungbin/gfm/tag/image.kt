@@ -7,7 +7,9 @@
 
 package land.sungbin.gfm.tag
 
-public class Image private constructor(
+import land.sungbin.gfm.MarkdownTag
+
+public class Image internal constructor(
     private val alt: String,
     private val src: String,
     private val width: String?,
@@ -19,16 +21,14 @@ public class Image private constructor(
             "<img src=\"$src\" alt=\"$alt\" width=\"$width\" />"
         }
     }
-
-    public companion object {
-        public fun image(
-            alt: String = "",
-            src: String,
-            width: String? = null,
-        ): MarkdownTag = Image(
-            alt = alt,
-            src = src,
-            width = width,
-        )
-    }
 }
+
+public fun image(
+    alt: String = "",
+    src: String,
+    width: String? = null,
+): MarkdownTag = Image(
+    alt = alt,
+    src = src,
+    width = width,
+)

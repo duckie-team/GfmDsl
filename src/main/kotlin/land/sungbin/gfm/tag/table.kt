@@ -5,19 +5,17 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
-@file:Suppress("UnusedReceiverParameter", "NOTHING_TO_INLINE")
-
 package land.sungbin.gfm.tag
 
 import land.sungbin.gfm.GfmDsl
-import land.sungbin.gfm.tag.text.Text.Companion.text
+import land.sungbin.gfm.MarkdownTag
 
-public class Table private constructor() : MarkdownTag() {
+public class Table @PublishedApi internal constructor() : MarkdownTag() {
     private enum class Align {
         Left, Right, Center, Default;
     }
 
-    public class Header private constructor() : MarkdownTag() {
+    public class Header @PublishedApi internal constructor() : MarkdownTag() {
         internal val contents = mutableListOf<String>()
 
         public operator fun String.unaryPlus() {
@@ -25,15 +23,9 @@ public class Table private constructor() : MarkdownTag() {
         }
 
         public override fun content(): String = "|" + contents.joinToString("|") + "|"
-
-        public companion object {
-            public fun Table.header(@GfmDsl block: Header.() -> Unit): Header {
-                return Header().apply(block)
-            }
-        }
     }
 
-    public class Body private constructor() : MarkdownTag() {
+    public class Body @PublishedApi internal constructor() : MarkdownTag() {
         internal val contents = mutableListOf<MarkdownTag>()
 
         public operator fun MarkdownTag.unaryPlus() {
@@ -45,26 +37,20 @@ public class Table private constructor() : MarkdownTag() {
         }
 
         public override fun content(): String = "|" + contents.joinToString("|") + "|"
-
-        public companion object {
-            public fun Table.body(@GfmDsl block: Body.() -> Unit): Body {
-                return Body().apply(block)
-            }
-        }
     }
 
-    private lateinit var header: Header
+    private lateinit var _header: Header
     private val bodies = mutableListOf<Body>()
     private var align = Align.Default
 
     private fun ensureTableInit() {
-        if (!::header.isInitialized || bodies.isEmpty()) {
+        if (!::_header.isInitialized || bodies.isEmpty()) {
             throw IllegalStateException("Table must be initialized with header and body")
         }
     }
 
     private fun checkHeaderDuplicateSetting() {
-        if (::header.isInitialized) {
+        if (::_header.isInitialized) {
             throw IllegalStateException("Header is already initialized")
         }
     }
@@ -76,7 +62,7 @@ public class Table private constructor() : MarkdownTag() {
     }
 
     private fun checkHeaderAndBodiesContentSizeSame() {
-        val headerSize = header.contents.size
+        val headerSize = _header.contents.size
         val bodySize = bodies.map { body ->
             body.contents.size
         }.toSet().singleOrNull()
@@ -87,7 +73,7 @@ public class Table private constructor() : MarkdownTag() {
 
     public operator fun Header.unaryPlus() {
         checkHeaderDuplicateSetting()
-        header = this
+        _header = this
     }
 
     public operator fun Body.unaryPlus() {
@@ -109,20 +95,20 @@ public class Table private constructor() : MarkdownTag() {
         align = Align.Center
     }
 
-    private inline fun divider(): String {
+    private fun divider(): String {
         return "|" + (when (align) {
             Align.Left -> ":---|"
             Align.Right -> "---:|"
             Align.Center -> ":---:|"
             Align.Default -> "---|"
-        }).repeat(header.contents.size)
+        }).repeat(_header.contents.size)
     }
 
     public override fun content(): String {
         ensureTableInit()
         checkHeaderAndBodiesContentSizeSame()
         return buildString {
-            append(header)
+            append(_header)
             appendLine()
 
             append(divider())
@@ -132,10 +118,15 @@ public class Table private constructor() : MarkdownTag() {
         }
     }
 
-    public companion object {
-        public fun table(@GfmDsl block: Table.() -> Unit): Table {
-            return Table().apply(block)
-        }
+    public inline fun header(@GfmDsl block: Header.() -> Unit): Header {
+        return Header().apply(block)
+    }
+
+    public inline fun body(@GfmDsl block: Body.() -> Unit): Body {
+        return Body().apply(block)
     }
 }
 
+public inline fun table(@GfmDsl block: Table.() -> Unit): MarkdownTag {
+    return Table().apply(block)
+}

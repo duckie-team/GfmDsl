@@ -7,8 +7,7 @@
 
 package land.sungbin.gfm
 
-import land.sungbin.gfm.tag.MarkdownTag
-import land.sungbin.gfm.tag.text.Text.Companion.text
+import land.sungbin.gfm.tag.text
 
 public class Markdown private constructor() {
     private val contents = mutableListOf<MarkdownTag>()

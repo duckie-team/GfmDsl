@@ -5,12 +5,12 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
-package land.sungbin.gfm.tag.text
+package land.sungbin.gfm.tag
 
 import land.sungbin.gfm.GfmDsl
-import land.sungbin.gfm.tag.MarkdownTag
+import land.sungbin.gfm.MarkdownTag
 
-public class Text private constructor(
+public class Text @PublishedApi internal constructor(
     private var text: String = "",
 ) : MarkdownTag() {
     private var bold = false
@@ -124,14 +124,12 @@ public class Text private constructor(
             text
         }
     }
+}
 
-    public companion object {
-        public fun text(text: String): Text {
-            return Text(text = text)
-        }
+public fun text(text: String): Text {
+    return Text(text = text)
+}
 
-        public fun text(@GfmDsl builder: Text.() -> Unit): Text {
-            return Text().apply(builder)
-        }
-    }
+public inline fun text(@GfmDsl builder: Text.() -> Unit): Text {
+    return Text().apply(builder)
 }

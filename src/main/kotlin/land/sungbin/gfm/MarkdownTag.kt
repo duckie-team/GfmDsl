@@ -5,7 +5,7 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
-package land.sungbin.gfm.tag
+package land.sungbin.gfm
 
 public abstract class MarkdownTag {
     public abstract fun content(): String
