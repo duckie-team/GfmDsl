@@ -7,20 +7,28 @@
 
 package land.sungbin.gfm.tag
 
-import land.sungbin.gfm.MarkdownTag
-
-class Image(
-    private val altText: String,
-    private var url: String = "",
+public class Image private constructor(
+    private val alt: String,
+    private val src: String,
+    private val width: String?,
 ) : MarkdownTag() {
-
-    override fun content(): String = "![$altText]($url)"
-
-    operator fun String.unaryPlus() {
-        url = this
+    public override fun content(): String {
+        return if (width == null) {
+            "![$alt]($src)"
+        } else {
+            "<img src=\"$src\" alt=\"$alt\" width=\"$width\" />"
+        }
     }
-}
 
-fun image(altText: String, block: Image.() -> Unit): MarkdownTag {
-    return Image(altText).apply(block)
+    public companion object {
+        public fun image(
+            alt: String = "",
+            src: String,
+            width: String? = null,
+        ): MarkdownTag = Image(
+            alt = alt,
+            src = src,
+            width = width,
+        )
+    }
 }
