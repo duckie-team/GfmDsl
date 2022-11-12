@@ -10,11 +10,13 @@
 |       **Text** - Strikethrough       |                  :o:                  |
 |         **Text** - Hyperlink         |                  :o:                  |
 |            **Underline**             |                  :o:                  |
+|      **Checkbox** - Check state      |                  :o:                  |
+|     **Checkbox** - Uncheck state     |                  :o:                  |
 |              **Image**               |                  :o:                  |
 |           **Image** - Alt            |                  :o:                  |
 |           **Image** - Size           |                  :o:                  |
 |              **Lists**               |                  :o:                  |
-|          **Lists** - Nested          | :construction: (experimental support) |
+|          **Lists** - Nested          |                  :x:                  |
 |              **Table**               |                  :o:                  |
 |       **Table** - Center Align       |                  :o:                  |
 |       **Table** - Right Align        |                  :o:                  |

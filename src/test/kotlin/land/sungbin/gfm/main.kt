@@ -23,6 +23,7 @@ import land.sungbin.gfm.tag.Underline
 import land.sungbin.gfm.tag.code
 import land.sungbin.gfm.tag.html
 import land.sungbin.gfm.tag.image
+import land.sungbin.gfm.tag.list
 import land.sungbin.gfm.tag.quote
 import land.sungbin.gfm.tag.table
 import land.sungbin.gfm.tag.text
@@ -39,6 +40,7 @@ public fun main() {
             quotes()
             codes()
             htmls()
+            lists()
         }.also { markdown ->
             copyToClipboard(markdown.toString())
         }
@@ -236,4 +238,35 @@ private fun Markdown.htmls() {
             |</p>
         """.trimMargin()
     )
+}
+
+private fun Markdown.lists() {
+    +H2(text = "Lists")
+    +H4(text = "Bullet style")
+    +list {
+        +"One"
+        +code(text = "Two")
+        +image(
+            alt = "GitHub - 10%",
+            src = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+            width = "10%",
+        )
+    }
+    +H4(text = "Number style")
+    +list {
+        numberStyle()
+        +"One"
+        +code {
+            language(language = "kotlin")
+            +"""
+                |fun main() {
+                |    println("Hello, Kotlin!")
+                |}
+            """.trimMargin()
+        }
+        +text {
+            bold()
+            +"Bolded three"
+        }
+    }
 }
