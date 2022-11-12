@@ -8,7 +8,7 @@ GitHub Flavored Markdown builder with Kotlin DSL ✍️
 
 ```kotlin
 dependencies {
-    implementation("land.sungbin.gfm:gfm-dsl:${version}")
+    implementation("land.sungbin.gfm:gfm-dsl:{version}")
 }
 ```
 
