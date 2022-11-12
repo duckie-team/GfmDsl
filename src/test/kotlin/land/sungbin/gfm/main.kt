@@ -20,6 +20,7 @@ import land.sungbin.gfm.tag.LineBreak
 import land.sungbin.gfm.tag.NewLine
 import land.sungbin.gfm.tag.Underline
 import land.sungbin.gfm.tag.code
+import land.sungbin.gfm.tag.html
 import land.sungbin.gfm.tag.image
 import land.sungbin.gfm.tag.quote
 import land.sungbin.gfm.tag.table
@@ -36,6 +37,7 @@ public fun main() {
             texts()
             quotes()
             codes()
+            htmls()
         }.also { markdown ->
             copyToClipboard(markdown.toString())
         }
@@ -222,4 +224,15 @@ private fun Markdown.codes() {
             |}
         """.trimMargin()
     }
+}
+
+private fun Markdown.htmls() {
+    +H2(text = "HTML")
+    +html(
+        code = """
+            |<p align="center">
+            |  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+            |</p>
+        """.trimMargin()
+    )
 }
