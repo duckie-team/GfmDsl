@@ -7,22 +7,29 @@
 
 package land.sungbin.gfm
 
-class Markdown internal constructor() {
-    private val content = mutableListOf<MarkdownTag>()
+import land.sungbin.gfm.tag.MarkdownTag
+import land.sungbin.gfm.tag.text.PlainText
 
-    operator fun MarkdownTag.unaryPlus() {
-        content.add(
-            element = this,
-        )
+public class Markdown private constructor() {
+    private val contents = mutableListOf<MarkdownTag>()
+
+    public operator fun MarkdownTag.unaryPlus() {
+        contents.add(this)
     }
 
-    override fun toString() = content.joinToString(
-        separator = System.lineSeparator()
+    public operator fun String.unaryPlus() {
+        contents.add(PlainText(text = this))
+    }
+
+    public override fun toString(): String = contents.joinToString(
+        separator = "\n",
     ) { tag ->
-        tag.content()
+        "${tag.content()}\n"
     }
-}
 
-fun markdown(@GfmDsl block: Markdown.() -> Unit): Markdown {
-    return Markdown().apply(block)
+    public companion object {
+        public fun markdown(@GfmDsl block: Markdown.() -> Unit): Markdown {
+            return Markdown().apply(block)
+        }
+    }
 }
