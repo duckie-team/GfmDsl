@@ -3,7 +3,7 @@
 |             Tag - Option             | Support |
 |:------------------------------------:|:-------:|
 |        **Headers** - H1 ~ H6         |   :o:   |
-|           **Text** - Plan            |   :o:   |
+|           **Text** - Plain           |   :o:   |
 |           **Text** - Bold            |   :o:   |
 |          **Text** - Italic           |   :o:   |
 |         **Text** - Underline         |   :o:   |
