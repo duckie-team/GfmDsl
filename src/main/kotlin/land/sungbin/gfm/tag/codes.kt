@@ -43,7 +43,7 @@ public class Code @PublishedApi internal constructor(
         code = this
     }
 
-    override fun content(): String {
+    public override fun content(): String {
         ensureCodeInit()
         return "```$language\n$code\n```"
     }

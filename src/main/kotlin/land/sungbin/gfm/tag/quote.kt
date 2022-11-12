@@ -21,7 +21,7 @@ public class Quote @PublishedApi internal constructor() : MarkdownTag() {
         contents.add(text(this))
     }
 
-    override fun content(): String {
+    public override fun content(): String {
         return contents.joinToString(
             separator = "${LineBreak}\n",
         ) { tag ->
