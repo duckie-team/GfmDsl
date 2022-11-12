@@ -10,20 +10,19 @@ package land.sungbin.gfm
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import land.sungbin.gfm.Markdown.Companion.markdown
-import land.sungbin.gfm.tag.Image.Companion.image
+import land.sungbin.gfm.tag.H1
+import land.sungbin.gfm.tag.H2
+import land.sungbin.gfm.tag.H3
+import land.sungbin.gfm.tag.H4
+import land.sungbin.gfm.tag.H5
+import land.sungbin.gfm.tag.H6
 import land.sungbin.gfm.tag.LineBreak
 import land.sungbin.gfm.tag.NewLine
-import land.sungbin.gfm.tag.Table.Body.Companion.body
-import land.sungbin.gfm.tag.Table.Companion.table
-import land.sungbin.gfm.tag.Table.Header.Companion.header
 import land.sungbin.gfm.tag.Underline
-import land.sungbin.gfm.tag.text.H1
-import land.sungbin.gfm.tag.text.H2
-import land.sungbin.gfm.tag.text.H3
-import land.sungbin.gfm.tag.text.H4
-import land.sungbin.gfm.tag.text.H5
-import land.sungbin.gfm.tag.text.H6
-import land.sungbin.gfm.tag.text.Text.Companion.text
+import land.sungbin.gfm.tag.image
+import land.sungbin.gfm.tag.quote
+import land.sungbin.gfm.tag.table
+import land.sungbin.gfm.tag.text
 
 public fun main() {
     println(
@@ -34,6 +33,7 @@ public fun main() {
             lines()
             tables()
             texts()
+            quotes()
         }.also { markdown ->
             copyToClipboard(markdown.toString())
         }
@@ -76,8 +76,8 @@ private fun Markdown.underline() {
 
 private fun Markdown.lines() {
     +H2(text = "lines")
-    +NewLine
     +LineBreak
+    +NewLine
 }
 
 private fun Markdown.tables() {
@@ -139,6 +139,24 @@ private fun Markdown.tables() {
             +"Body 6"
         }
     }
+    +H4(text = "Default")
+    +table {
+        +header {
+            +"Header 1"
+            +"Header 2"
+            +"Header 3"
+        }
+        +body {
+            +"Body 1"
+            +"Body 2"
+            +"Body 3"
+        }
+        +body {
+            +"Body 4"
+            +"Body 5"
+            +"Body 6"
+        }
+    }
 }
 
 private fun Markdown.texts() {
@@ -151,5 +169,35 @@ private fun Markdown.texts() {
         strikethrough()
         link(src = "https://github.com/duckie-team/GfmDsl")
         +"Bold, Italic, Underline, Strikethrough, Link"
+    }
+}
+
+private fun Markdown.quotes() {
+    +H2(text = "Quote")
+    +quote {
+        +"Quote"
+        +text {
+            bold()
+            +"Image Quote"
+        }
+        +image(
+            alt = "GitHub - 50%",
+            src = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+            width = "10%",
+        )
+        +quote {
+            +text {
+                bold()
+                +"Nested Quote"
+            }
+            +quote {
+                +"Double Nested Quote"
+                +quote {
+                    +quote {
+                        +"Triple Nested Quote"
+                    }
+                }
+            }
+        }
     }
 }
