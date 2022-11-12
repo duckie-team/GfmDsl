@@ -7,12 +7,7 @@
 
 package land.sungbin.gfm.tag
 
-import land.sungbin.gfm.MarkdownTag
-
-object NewLine : MarkdownTag() {
-    override fun content() = "  "
-}
-
-object Br : MarkdownTag() {
-    override fun content() = "<br/>"
+public abstract class MarkdownTag {
+    public abstract fun content(): String
+    public final override fun toString(): String = content()
 }
