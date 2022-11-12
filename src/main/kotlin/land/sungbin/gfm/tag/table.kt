@@ -5,64 +5,137 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
+@file:Suppress("UnusedReceiverParameter", "NOTHING_TO_INLINE")
+
 package land.sungbin.gfm.tag
 
-import land.sungbin.gfm.MarkdownTag
+import land.sungbin.gfm.GfmDsl
+import land.sungbin.gfm.tag.text.PlainText
 
-class Table : MarkdownTag() {
-    class TableHeader : MarkdownTag() {
-        private val headers = mutableListOf<String>()
-        val count get() = headers.size
-
-        operator fun String.unaryPlus() = headers.add(this)
-
-        override fun content(): String = "|" + headers.joinToString("|") + "|"
+public class Table private constructor() : MarkdownTag() {
+    private enum class Align {
+        Left, Right, Center, Default;
     }
 
-    class TableBody : MarkdownTag() {
+    public class Header private constructor() : MarkdownTag() {
+        internal val contents = mutableListOf<String>()
 
-        private val content = mutableListOf<MarkdownTag>()
+        public operator fun String.unaryPlus() {
+            contents.add(this)
+        }
 
-        operator fun MarkdownTag.unaryPlus() = content.add(this)
+        public override fun content(): String = "|" + contents.joinToString("|") + "|"
 
-        override fun content(): String = "|" + content.joinToString("|") + "|"
+        public companion object {
+            public fun Table.header(@GfmDsl block: Header.() -> Unit): Header {
+                return Header().apply(block)
+            }
+        }
     }
 
-    private var tableHeader: TableHeader? = null
-    private var tableBody: TableBody? = null
+    public class Body private constructor() : MarkdownTag() {
+        internal val contents = mutableListOf<MarkdownTag>()
 
-    operator fun TableHeader.unaryPlus() {
-        tableHeader = this
+        public operator fun MarkdownTag.unaryPlus() {
+            contents.add(this)
+        }
+
+        public operator fun String.unaryPlus() {
+            contents.add(PlainText(text = this))
+        }
+
+        public override fun content(): String = "|" + contents.joinToString("|") + "|"
+
+        public companion object {
+            public fun Table.body(@GfmDsl block: Body.() -> Unit): Body {
+                return Body().apply(block)
+            }
+        }
     }
 
-    operator fun TableBody.unaryPlus() {
-        tableBody = this
+    private lateinit var header: Header
+    private val bodies = mutableListOf<Body>()
+    private var align = Align.Default
+
+    private fun ensureTableInit() {
+        if (!::header.isInitialized || bodies.isEmpty()) {
+            throw IllegalStateException("Table must be initialized with header and body")
+        }
     }
 
-    override fun content(): String {
-        return if (tableHeader != null && tableBody != null) {
-            StringBuilder().apply {
-                append(tableHeader.toString())
-                append(System.lineSeparator())
+    private fun checkHeaderDuplicateSetting() {
+        if (::header.isInitialized) {
+            throw IllegalStateException("Header is already initialized")
+        }
+    }
 
-                val divider = "|" + "-|".repeat(tableHeader!!.count)
-                append(divider)
-                append(System.lineSeparator())
+    private fun checkAlignDuplicateSetting() {
+        if (align != Align.Default) {
+            throw IllegalStateException("Table align is already set")
+        }
+    }
 
-                append(tableBody.toString())
-            }.toString()
-        } else throw IllegalStateException("Table header or body cannot be null!")
+    private fun checkHeaderAndBodiesContentSizeSame() {
+        val headerSize = header.contents.size
+        val bodySize = bodies.map { body ->
+            body.contents.size
+        }.toSet().singleOrNull()
+        if (headerSize != bodySize) {
+            throw IllegalStateException("Header and bodies content size must be same")
+        }
+    }
+
+    public operator fun Header.unaryPlus() {
+        checkHeaderDuplicateSetting()
+        header = this
+    }
+
+    public operator fun Body.unaryPlus() {
+        bodies.add(this)
+    }
+
+    public fun leftAlign() {
+        checkAlignDuplicateSetting()
+        align = Align.Left
+    }
+
+    public fun rightAlign() {
+        checkAlignDuplicateSetting()
+        align = Align.Right
+    }
+
+    public fun centerAlign() {
+        checkAlignDuplicateSetting()
+        align = Align.Center
+    }
+
+    private inline fun divider(): String {
+        return "|" + (when (align) {
+            Align.Left -> ":---|"
+            Align.Right -> "---:|"
+            Align.Center -> ":---:|"
+            Align.Default -> "---|"
+        }).repeat(header.contents.size)
+    }
+
+    public override fun content(): String {
+        ensureTableInit()
+        checkHeaderAndBodiesContentSizeSame()
+        return buildString {
+            append(header)
+            appendLine()
+
+            append(divider())
+            appendLine()
+
+            append(bodies.joinToString("\n"))
+        }
+    }
+
+    public companion object {
+        public fun table(@GfmDsl block: Table.() -> Unit): Table {
+            return Table().apply(block)
+        }
     }
 }
 
-fun table(block: Table.() -> Unit): Table {
-    return Table().apply(block)
-}
-
-fun header(block: Table.TableHeader.() -> Unit): Table.TableHeader {
-    return Table.TableHeader().apply(block)
-}
-
-fun body(block: Table.TableBody.() -> Unit): Table.TableBody {
-    return Table.TableBody().apply(block)
-}
