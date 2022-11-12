@@ -11,7 +11,6 @@ package land.sungbin.gfm
 
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
-import land.sungbin.gfm.Markdown.Companion.markdown
 import land.sungbin.gfm.tag.H1
 import land.sungbin.gfm.tag.H2
 import land.sungbin.gfm.tag.H3

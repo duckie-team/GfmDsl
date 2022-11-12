@@ -9,7 +9,7 @@ package land.sungbin.gfm
 
 import land.sungbin.gfm.tag.text
 
-public class Markdown private constructor() {
+public class Markdown @PublishedApi internal constructor() {
     private val contents = mutableListOf<MarkdownTag>()
 
     public operator fun MarkdownTag.unaryPlus() {
@@ -25,10 +25,8 @@ public class Markdown private constructor() {
     ) { tag ->
         "${tag.content()}\n"
     }
+}
 
-    public companion object {
-        public fun markdown(@GfmDsl block: Markdown.() -> Unit): Markdown {
-            return Markdown().apply(block)
-        }
-    }
+public inline fun markdown(@GfmDsl block: Markdown.() -> Unit): Markdown {
+    return Markdown().apply(block)
 }
