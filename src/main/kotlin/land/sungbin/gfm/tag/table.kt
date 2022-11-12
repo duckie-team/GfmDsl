@@ -10,7 +10,7 @@
 package land.sungbin.gfm.tag
 
 import land.sungbin.gfm.GfmDsl
-import land.sungbin.gfm.tag.text.PlainText
+import land.sungbin.gfm.tag.text.Text.Companion.text
 
 public class Table private constructor() : MarkdownTag() {
     private enum class Align {
@@ -41,7 +41,7 @@ public class Table private constructor() : MarkdownTag() {
         }
 
         public operator fun String.unaryPlus() {
-            contents.add(PlainText(text = this))
+            contents.add(text(this))
         }
 
         public override fun content(): String = "|" + contents.joinToString("|") + "|"

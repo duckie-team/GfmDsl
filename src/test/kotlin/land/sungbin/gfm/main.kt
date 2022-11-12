@@ -23,15 +23,17 @@ import land.sungbin.gfm.tag.text.H3
 import land.sungbin.gfm.tag.text.H4
 import land.sungbin.gfm.tag.text.H5
 import land.sungbin.gfm.tag.text.H6
+import land.sungbin.gfm.tag.text.Text.Companion.text
 
 public fun main() {
     println(
         markdown {
-            headersTest()
-            imagesTest()
-            underlineTest()
-            linesTest()
-            tablesTest()
+            headers()
+            images()
+            underline()
+            lines()
+            tables()
+            texts()
         }.also { markdown ->
             copyToClipboard(markdown.toString())
         }
@@ -44,7 +46,7 @@ private fun copyToClipboard(text: String) {
     clipboard.setContents(selection, selection)
 }
 
-private fun Markdown.headersTest() {
+private fun Markdown.headers() {
     +H2(text = "Headers")
     +H1(text = "Hello, world!")
     +H2(text = "Hello, world!")
@@ -54,7 +56,7 @@ private fun Markdown.headersTest() {
     +H6(text = "Hello, world!")
 }
 
-private fun Markdown.imagesTest() {
+private fun Markdown.images() {
     +H2(text = "Images")
     +image(
         alt = "GitHub - 50%",
@@ -67,18 +69,18 @@ private fun Markdown.imagesTest() {
     )
 }
 
-private fun Markdown.underlineTest() {
+private fun Markdown.underline() {
     +H2(text = "Underline")
     +Underline
 }
 
-private fun Markdown.linesTest() {
+private fun Markdown.lines() {
     +H2(text = "lines")
     +NewLine
     +LineBreak
 }
 
-private fun Markdown.tablesTest() {
+private fun Markdown.tables() {
     +H2(text = "Tables")
     +H4(text = "Center")
     +table {
@@ -136,5 +138,18 @@ private fun Markdown.tablesTest() {
             +"Body 5"
             +"Body 6"
         }
+    }
+}
+
+private fun Markdown.texts() {
+    +H2(text = "Texts")
+    +"Plain Text"
+    +text {
+        bold()
+        italic()
+        underline()
+        strikethrough()
+        link(src = "https://github.com/duckie-team/GfmDsl")
+        +"Bold, Italic, Underline, Strikethrough, Link"
     }
 }

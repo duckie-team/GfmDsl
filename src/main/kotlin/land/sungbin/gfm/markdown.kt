@@ -8,7 +8,7 @@
 package land.sungbin.gfm
 
 import land.sungbin.gfm.tag.MarkdownTag
-import land.sungbin.gfm.tag.text.PlainText
+import land.sungbin.gfm.tag.text.Text.Companion.text
 
 public class Markdown private constructor() {
     private val contents = mutableListOf<MarkdownTag>()
@@ -18,7 +18,7 @@ public class Markdown private constructor() {
     }
 
     public operator fun String.unaryPlus() {
-        contents.add(PlainText(text = this))
+        contents.add(text(this))
     }
 
     public override fun toString(): String = contents.joinToString(
