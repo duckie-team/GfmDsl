@@ -19,6 +19,7 @@ import land.sungbin.gfm.tag.H6
 import land.sungbin.gfm.tag.LineBreak
 import land.sungbin.gfm.tag.NewLine
 import land.sungbin.gfm.tag.Underline
+import land.sungbin.gfm.tag.code
 import land.sungbin.gfm.tag.image
 import land.sungbin.gfm.tag.quote
 import land.sungbin.gfm.tag.table
@@ -34,6 +35,7 @@ public fun main() {
             tables()
             texts()
             quotes()
+            codes()
         }.also { markdown ->
             copyToClipboard(markdown.toString())
         }
@@ -59,7 +61,7 @@ private fun Markdown.headers() {
 private fun Markdown.images() {
     +H2(text = "Images")
     +image(
-        alt = "GitHub - 50%",
+        alt = "GitHub - 10%",
         src = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
         width = "10%",
     )
@@ -75,7 +77,7 @@ private fun Markdown.underline() {
 }
 
 private fun Markdown.lines() {
-    +H2(text = "lines")
+    +H2(text = "Lines")
     +LineBreak
     +NewLine
 }
@@ -181,7 +183,7 @@ private fun Markdown.quotes() {
             +"Image Quote"
         }
         +image(
-            alt = "GitHub - 50%",
+            alt = "GitHub - 10%",
             src = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
             width = "10%",
         )
@@ -199,5 +201,25 @@ private fun Markdown.quotes() {
                 }
             }
         }
+    }
+}
+
+private fun Markdown.codes() {
+    +H2(text = "Codes")
+    +code(text = "Plain Code")
+    +code {
+        +"""
+            |fun main() {
+            |    println("Hello, Text!")
+            |}
+        """.trimMargin()
+    }
+    +code {
+        language(language = "kotlin")
+        +"""
+            |fun main() {
+            |    println("Hello, Kotlin!")
+            |}
+        """.trimMargin()
     }
 }
