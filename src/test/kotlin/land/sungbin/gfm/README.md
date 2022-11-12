@@ -120,7 +120,8 @@ fun main() {
 
 # test result - raw
 
-```yaml
+<pre><code>
+
 ## Headers
 
 # Header 1
@@ -238,4 +239,4 @@ fun main() {
 3. **Bolded three**
 
 
-```
+</code></pre>
