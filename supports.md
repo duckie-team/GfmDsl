@@ -10,8 +10,6 @@
 |       **Text** - Strikethrough       |                  :o:                  |
 |         **Text** - Hyperlink         |                  :o:                  |
 |            **Underline**             |                  :o:                  |
-|      **Checkbox** - Check state      |                  :o:                  |
-|     **Checkbox** - Uncheck state     |                  :o:                  |
 |              **Image**               |                  :o:                  |
 |           **Image** - Alt            |                  :o:                  |
 |           **Image** - Size           |                  :o:                  |
