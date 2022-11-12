@@ -5,6 +5,8 @@
  * Please see full license: https://github.com/duckie-team/GfmDsl/blob/master/LICENSE
  */
 
+@file:Suppress("SpellCheckingInspection")
+
 package land.sungbin.gfm
 
 import java.awt.Toolkit
