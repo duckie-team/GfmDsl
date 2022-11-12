@@ -48,12 +48,12 @@ private fun copyToClipboard(text: String) {
 
 private fun Markdown.headers() {
     +H2(text = "Headers")
-    +H1(text = "Hello, world!")
-    +H2(text = "Hello, world!")
-    +H3(text = "Hello, world!")
-    +H4(text = "Hello, world!")
-    +H5(text = "Hello, world!")
-    +H6(text = "Hello, world!")
+    +H1(text = "Header 1")
+    +H2(text = "Header 2")
+    +H3(text = "Header 3")
+    +H4(text = "Header 4")
+    +H5(text = "Header 5")
+    +H6(text = "Header 6")
 }
 
 private fun Markdown.images() {
