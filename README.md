@@ -2,7 +2,7 @@
 
 GitHub Flavored Markdown builder with Kotlin DSL ✍️
 
-*Status: Deprecated, see [compose-markdown](https://github.com/jisungbin/compose-markdown) instead.*
+***Status: Deprecated, see [compose-markdown](https://github.com/jisungbin/compose-markdown) instead.***
 
 ---
 
